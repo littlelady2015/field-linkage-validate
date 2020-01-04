@@ -1,4 +1,4 @@
-export relyField = {
+const relyField = {
   compareType: "eq",
   value: ["1"],
   displayContent: {
@@ -12,3 +12,4 @@ export relyField = {
   requiredFields: ["Birthday"],
   notRequiredFields: ["HomePhone"]
 }
+export default relyField; 
