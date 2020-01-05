@@ -15,7 +15,7 @@ export const contains = (arr1, arr2) => {
   return arr1.some(item => includes(arr2, item))
 }
 // 将显示隐藏只读Obj 转为数组
-mapObjToArr(obj) {
+const mapObjToArr = (obj) => {
   if(obj instanceOf Object) {
     let newObj = Object.assign({}, newObj);
     let keys = Object.keys(newObj);
