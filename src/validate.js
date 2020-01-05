@@ -16,8 +16,8 @@ export const contains = (arr1, arr2) => {
 }
 // 将显示隐藏只读Obj 转为数组
 const mapObjToArr = (obj) => {
-  if(obj instanceOf Object) {
-    let newObj = Object.assign({}, newObj);
+  let newObj = Object.assign({}, obj);
+  if(obj instanceof Object) {
     let keys = Object.keys(newObj);
     keys.map(key=> newObj[key] = objToArr(obj[key]));
   }
@@ -33,6 +33,7 @@ export const compareSameRule = (condition1, condition2, index1, index2) => {
    condition2 = mapObjToArr(condition2);
    let standard = contains(condition1.value,condition2.value) && condition1.value && condition1.compareType === condition2.compareType 
   if(standard) {
+    // 这段有点重复
     let displayContent1 = condition1.displayContent;
     let displayContent2 = condition2.displayContent;
     let hideContent1 =  condition1.hideContent;
@@ -52,9 +53,10 @@ export const compareSameRule = (condition1, condition2, index1, index2) => {
 }
 //  同一规则条件匹配
 export const matchSingleRule = (rules=[]) => {
+  let str = []
   for(let i = 0 ; i < rules.length -1; i++) {
     for(let j = i + 1; j < rules.length; j++) {
-
+      str.push(`(${i} , ${j})`); 
     }
   } 
   return str;
