@@ -2,9 +2,10 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import relyField from './dataSet';
-import { contains } from './validate';
+import { matchSingleRule } from './validate';
 function App() {
-  let result = contains(relyField.displayContent, relyField.hideContent);
+  // let result = contains(relyField.displayContent, relyField.hideContent);
+  let result = matchSingleRule(relyField);
   return (
     <div className="App">
       <header className="App-header">
