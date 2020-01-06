@@ -45,19 +45,23 @@ const compareSameRule = (condition1, condition2, index1, index2) => {
    condition2 = dealRelyFieldData(condition2);
    let standard = condition1.value && contains(condition1.value,condition2.value) && condition1.compareType === condition2.compareType 
   if(standard) {
-    let { displayContent: displayContent1, readonlyContent: readonlyContent1 } = condition1; 
-    let { hideContent: hideContent2, readonlyContent: readonlyContent2 } =  condition2;
-    if(contains(displayContent1, hideContent2)) {
-      tipsArr.push(`条件${index1 + 1 } 和 条件 ${index2 + 1}中显示与隐藏重复`);
+    let { displayContent: displayContent1, hideContent: hideContent1,readonlyContent: readonlyContent1 } = condition1; 
+    let { displayContent: displayContent2, hideContent: hideContent2, readonlyContent: readonlyContent2 } =  condition2;
+    if(contains(displayContent1, hideContent2) || contains(displayContent2, hideContent1)) {
+      tipsArr.push(`条件${index1 + 1 } 和 条件 ${index2 + 1}中显示与隐藏重复\n`);
     }
-    if(contains(displayContent1, readonlyContent2)) {
-      tipsArr.push(`条件${index1 + 1} 和 条件 ${index2 + 1}中显示与只读重复`);
+    if(contains(displayContent1, readonlyContent2) || contains(displayContent2, readonlyContent1)) {
+      tipsArr.push(`条件${index1 + 1} 和 条件 ${index2 + 1}中显示与只读重复\n`);
     }
-    if(contains(readonlyContent1, hideContent2)) {
-      tipsArr.push(`条件${index1} 和 条件 ${index2}中只读与隐藏重复`);
+    if(contains(readonlyContent1, hideContent2) || contains(readonlyContent2, hideContent1)) {
+      tipsArr.push(`条件${index1 + 1} 和 条件 ${index2 + 1}中只读与隐藏重复\n`);
     } 
     return tipsArr;
   }
+}
+const formatTips = (arr) => {
+  return arr.sort(()=> {
+  });
 }
 //  同一规则条件匹配
 export const matchSingleRule = (rules=[]) => {
