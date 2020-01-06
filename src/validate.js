@@ -14,19 +14,15 @@ export const dealRelyFieldData = (fieldData) => {
   let keys = Object.keys(data);
   keys.forEach(item => {
     let testData = data[item];
-    if(!Array.isArray(testData)) {
-      data[item] = [];
-      if(typeof testData !== 'Object') data[item].push(testData)
-      else data[item] = objToArr(testData);
-    } 
+    if(Object.prototype.toString.call(testData) === '[object Object]') {
+      data[item] = objToArr(testData)
+    }
   });
   return data;
 }
 
-export const contains = (arr1, arr2) => {
-  // if(!arr1 || !arr2) return false;
-  if(!Array.isArray(arr1)) arr1 = objToArr(arr1);
-  if(!Array.isArray(arr2)) arr2 = objToArr(arr2);
+export const contains = (arr1 = [], arr2 = []) => {
+  if(!arr1 || !arr2) return false;
   return arr1.some(item => includes(arr2, item))
 }
 // 将显示隐藏只读Obj 转为数组
@@ -39,7 +35,7 @@ const mapObjToArr = (obj) => {
   return newObj
 }
 // 同一规则不同条件的对比
-export const compareSameRule = (condition1, condition2, index1, index2) => {
+const compareSameRule = (condition1, condition2, index1, index2) => {
   /*
    *  @params: condition: Object
    *           index:  Number
@@ -47,18 +43,15 @@ export const compareSameRule = (condition1, condition2, index1, index2) => {
   const tipsArr = [];
    condition1 = dealRelyFieldData(condition1);
    condition2 = dealRelyFieldData(condition2);
-   let standard = contains(condition1.value,condition2.value) && condition1.value && condition1.compareType === condition2.compareType 
+   let standard = condition1.value && contains(condition1.value,condition2.value) && condition1.compareType === condition2.compareType 
   if(standard) {
-    // 这段有点重复
-    let displayContent1 = condition1.displayContent;
-    let hideContent2 = condition2.hideContent;
-    let readonlyContent1 = condition1.readOnlyContent;
-    let readonlyContent2 = condition2.readOnlyContent;
+    let { displayContent: displayContent1, readonlyContent: readonlyContent1 } = condition1; 
+    let { hideContent: hideContent2, readonlyContent: readonlyContent2 } =  condition2;
     if(contains(displayContent1, hideContent2)) {
-      tipsArr.push(`条件${index1} 和 条件 ${index2}中显示与隐藏重复`);
+      tipsArr.push(`条件${index1 + 1 } 和 条件 ${index2 + 1}中显示与隐藏重复`);
     }
     if(contains(displayContent1, readonlyContent2)) {
-      tipsArr.push(`条件${index1} 和 条件 ${index2}中显示与只读重复`);
+      tipsArr.push(`条件${index1 + 1} 和 条件 ${index2 + 1}中显示与只读重复`);
     }
     if(contains(readonlyContent1, hideContent2)) {
       tipsArr.push(`条件${index1} 和 条件 ${index2}中只读与隐藏重复`);
@@ -71,8 +64,8 @@ export const matchSingleRule = (rules=[]) => {
   let str = [];
   for(let i = 0 ; i < rules.length -1; i++) {
     for(let j = i + 1; j < rules.length; j++) {
-      let tipArr = compareSameRule(rules[i], rules[j]);
-      str.push(tipArr);
+      let tipArr = compareSameRule(rules[i], rules[j], i , j);
+      if(tipArr) str.push(tipArr);
     }
   } 
   return str;
