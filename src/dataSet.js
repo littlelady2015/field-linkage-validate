@@ -18,7 +18,7 @@ const relyField = [{
   },
   {
     compareType: "eq",
-    value: [],
+    value: ["1"],
     displayContent: {
       fields: ["ProbationStartDate", "Probation", "IsHaveProbation"],
       parts: []
@@ -42,7 +42,7 @@ const relyField = [{
       parts: []
     },
     readonlyContent: {
-      fields: [],
+      fields: ["ProbationStartDate"],
       parts: ["9652bcfe-c6f7-4f9e-aa59-9d6af98e0b0c"]
     },
     hideContent: {
@@ -54,3 +54,8 @@ const relyField = [{
   }
 ]
 export default relyField; 
+export const ds = [
+  {Value: "1", Name: "选项A选项A选项A选项A选项A选项A"},
+  {Value: "2", Name: "选项b"},
+  {Value: "3", Name: "选项c"},
+]
