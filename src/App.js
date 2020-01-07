@@ -1,14 +1,14 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import relyField from './dataSet';
+import relyField, { fieldValData } from './dataSet';
 import { matchSingleRule } from './validate';
 function App() {
   // let result = contains(relyField.displayContent, relyField.hideContent);
-  let result = matchSingleRule(relyField);
-  result = result.map((item, index)=> {
-    return <li key={item.index}>{ item }</li>
-  })
+  let result = matchSingleRule(relyField, 'hahah', fieldValData);
+  // result = result.map((item, index)=> {
+  //   return <li key={item.index}>{ item }</li>
+  // })
   let fragment = <React.Fragment>
       {result}
     </React.Fragment>
